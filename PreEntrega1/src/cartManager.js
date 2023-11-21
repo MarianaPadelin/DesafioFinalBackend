@@ -28,6 +28,23 @@ class CartManager {
     }
   }
 
+  async addProduct(prod){
+    try {
+      if (this.products.length === 0) {
+        prod.id = 1;
+      } else {
+        prod.id = this.cart[this.products.length - 1].id + 1;
+      }
+      this.products.push(prod);
+      await fs.promises.writeFile(
+        this.path,
+        JSON.stringify(this.cart, null, "\t")
+      );
+    } catch (e) {
+      console.log(`Hay un error ${e}`);
+    }
+  }
+
   async getCart() {
     let cart = fs.readFileSync(this.path, "utf-8");
     this.cart = JSON.parse(cart);
@@ -37,8 +54,8 @@ class CartManager {
 
 class Item {
     //como hago para crear un array aca?
-  constructor(products) {
-     (this.products = products);
+  constructor() {
+     (this.products = []);
   }
 }
 

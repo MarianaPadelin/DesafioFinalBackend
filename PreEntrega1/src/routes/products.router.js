@@ -1,5 +1,11 @@
 import { Router } from "express";
 import { ProductManager, Product } from "../productManager.js";
+import { productValidation } from "../utils/productValidation.js";
+
+//faltan los status
+
+//falta metodo put
+//falta array de imagenes en thumbnail
 
 const productsRouter = Router();
 
@@ -8,6 +14,10 @@ const prueboProducto = new ProductManager();
 productsRouter.get("/", async (req, res) => {
   const datosImportados = await prueboProducto.getProducts();
   const { limit } = req.query;
+
+  if (!datosImportados) {
+    return [];
+  }
 
   if (limit && limit <= datosImportados.length) {
     datosImportados.length = limit;
@@ -18,23 +28,22 @@ productsRouter.get("/", async (req, res) => {
 });
 
 productsRouter.get("/:id", async (req, res) => {
-  let datosImportados = await prueboProducto.getProducts();
   const { id } = req.params;
+  let datosImportados = await prueboProducto.getProductById(+id);
 
-  const productoEncontrado = datosImportados.find((user) => user.id === +id);
-
-  if (productoEncontrado) {
-    return res.send(productoEncontrado);
-  } else {
-    return res.json(
-     {
-        message: "no existe el producto con ese id"
-     }
-    );
+  if(!datosImportados){
+      return res.json({
+          message: `No existe el producto con id ${id}`
+      })
   }
+  return res.json({
+      datosImportados
+  })
+
+
 });
 
-productsRouter.post("/", async (req, res) => {
+productsRouter.post("/", productValidation, async (req, res) => {
   const { title, description, price, thumbnail, code, stock } = req.body;
 
   const producto = new Product(
@@ -87,14 +96,9 @@ productsRouter.post("/", async (req, res) => {
 
 productsRouter.put("/:id", async (req, res) => {
   const { id } = req.params;
-  const { title, description, price, thumbnail, code, stock } = req.body;
+  const { title } = req.body;
   const producto = new Product(
     title,
-    description,
-    price,
-    thumbnail,
-    code,
-    stock
   );
 
   if (!id) {
@@ -104,14 +108,18 @@ productsRouter.put("/:id", async (req, res) => {
   }
 
   try {
+    //acá tengo el problema, se manda el res correctamente, pero el updateProduct no hace nada, no actualiza el archivo json. 
     await prueboProducto.updateProduct(+id, title);
+    let productoModificado = await prueboProducto.getProductById(+id)
+    
     res.json({
       message: "Post updated",
-        producto
+      producto,
+      productoModificado
     });
   } catch (e) {
     res.json({
-      error: e,
+      message: e,
     });
   }
 });

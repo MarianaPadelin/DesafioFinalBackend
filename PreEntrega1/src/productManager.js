@@ -3,7 +3,7 @@ import fs from "fs";
 class ProductManager {
   constructor() {
     //esto tiene que ser productos.json
-    this.path = "./src/datos.json";
+    this.path = "./src/productos.json";
     try {
       let products = fs.readFileSync(this.path, "utf-8");
       this.products = JSON.parse(products);
@@ -21,23 +21,13 @@ class ProductManager {
           : (existeCodigo = false);
       });
 
-      let datosCompletos = Object.values(product);
 
       if (existeCodigo === true) {
         console.log("El código ya existe");
-        throw Error(`This code already exists`);
-        // throw Error(`Product with code ${product.code} already exists`);
+        throw Error(`Product with code ${product.code} already exists`);
         
       }
-      if (
-        //hay que poner cada dato incompleto por separado
-        (datosCompletos.length !==8 && datosCompletos.includes(undefined)) ||
-        datosCompletos.includes("")
-      ) {
-        console.log("Hay campos incompletos");
-        throw Error("All fields must be complete");
 
-      }
 
       //si todo salió bien
       console.log("Éxito");
@@ -54,7 +44,7 @@ class ProductManager {
       );
     } catch (error) {
       console.log(`Hay un error: ${error}`);
-      throw Error(`Hay un error: ${error}`);
+      throw (`Hay un error: ${error}`);
     }
   }
 
@@ -70,9 +60,9 @@ class ProductManager {
     );
 
     if (!producto) {
-      console.log("Not found");
+      console.log(`no existe el id ${idProducto}`)
     } else {
-      console.log("El producto encontrado es", producto);
+      return ("El producto encontrado es", producto);
     }
   }
 
@@ -82,7 +72,8 @@ class ProductManager {
     );
     if (!productoAmodificar) {
       console.log("Error. El producto no existe.");
-      return;
+      throw Error("el producto no existe")
+
     }
 
     productoAmodificar[key] = newValue;
@@ -119,13 +110,13 @@ class ProductManager {
 }
 
 class Product {
-  constructor(title, description, price, thumbnail, code, status, category, stock) {
+  constructor(title, description, price, thumbnail, code, category, stock) {
     (this.title = title),
       (this.description = description),
       (this.price = price),
       (this.thumbnail = thumbnail),
       (this.code = code),
-      (this.status = status),
+      (this.status = true),
       (this.category = category),
       (this.stock = stock);
   }
@@ -146,140 +137,12 @@ export { ProductManager, Product };
 //     2030,
 //     "SinImagen",
 //     "abc143",
+//     true,
+//     "cat1",
 //     "44"
 //   )
 // );
 
-// prueboProducto.addProduct(
-//   new Product(
-//     "Producto prueba2",
-//     "a este le falta el stock",
-//     243,
-//     "SinImagen",
-//     "woeiefjwijw"
-//   )
-// );
-
-// prueboProducto.addProduct(
-//   new Product(
-//     "Producto prueba3",
-//     "Acá repito el código",
-//     232230,
-//     "SinImagen",
-//     "abc143",
-//     "4999"
-//   )
-// );
-
-// prueboProducto.addProduct(
-//   new Product(
-//     "Producto prueba4",
-//     "Acá tiene todo bien",
-//     12345,
-//     "SinImagen",
-//     "otrocodigo",
-//     "4999"
-//   )
-// );
-
-// prueboProducto.addProduct(
-//   new Product(
-//     "",
-//     "A este le falta el titulo",
-//     12345,
-//     "SinImagen",
-//     "32rhiof2oi",
-//     "4999"
-//   )
-// // );
-// prueboProducto.addProduct(
-//   new Product(
-//     "producto numero 2",
-//     "descripción",
-//     12345,
-//     "SinImagen",
-//     "aaaa111",
-//     "344"
-//   )
-// );prueboProducto.addProduct(
-//   new Product(
-//     "producto numero 3",
-//     "descripción",
-//     12345,
-//     "SinImagen",
-//     "fthoigbeo",
-//     "400"
-//   )
-// );prueboProducto.addProduct(
-//   new Product(
-//     "producto numero 4",
-//     "descripción",
-//     12345,
-//     "SinImagen",
-//     "egevrw",
-//     "60"
-//   )
-// );
-// prueboProducto.addProduct(
-//   new Product(
-//     "producto numero 5",
-//     "descripción",
-//     12345,
-//     "SinImagen",
-//     "fgertrty",
-//     "500"
-//   )
-// );
-// prueboProducto.addProduct(
-//   new Product(
-//     "producto numero 6",
-//     "descripción",
-//     12345,
-//     "SinImagen",
-//     "pouykjnr",
-//     "9004"
-//   )
-// );
-// prueboProducto.addProduct(
-//   new Product(
-//     "producto numero 7",
-//     "descripción",
-//     12345,
-//     "SinImagen",
-//     "ertgerge",
-//     "1020"
-//   )
-// );
-// prueboProducto.addProduct(
-//   new Product(
-//     "producto numero 8",
-//     "descripción",
-//     12345,
-//     "SinImagen",
-//     "23423",
-//     "400"
-//   )
-// );
-// prueboProducto.addProduct(
-//   new Product(
-//     "producto numero 9",
-//     "descripción",
-//     12345,
-//     "SinImagen",
-//     "hgrnbgdv",
-//     "344"
-//   )
-// );
-// prueboProducto.addProduct(
-//   new Product(
-//     "producto numero 10",
-//     "descripción",
-//     12345,
-//     "SinImagen",
-//     "gfgvfre",
-//     "5"
-//   )
-// );
 
 // 3) Busco productos por id
 // prueboProducto.getProductById(2);

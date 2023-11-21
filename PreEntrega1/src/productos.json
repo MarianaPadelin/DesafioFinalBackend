@@ -1,0 +1,61 @@
+[
+	{
+		"title": "Producto prueba1",
+		"description": "Este es un producto prueba",
+		"price": 2030,
+		"thumbnail": "SinImagen",
+		"code": "abc143",
+		"status": true,
+		"category": "cat1",
+		"stock": "44",
+		"id": 1
+	},
+	{
+		"title": "producto nuevo",
+		"description": "este es otro producto",
+		"price": "5783",
+		"thumbnail": "img53",
+		"code": "sgrtg",
+		"status": 45,
+		"id": 2
+	},
+	{
+		"title": "producto nuevo",
+		"description": "este es otro producto",
+		"price": "5783",
+		"thumbnail": "img53",
+		"code": "eegfrw",
+		"status": 45,
+		"id": 3
+	},
+	{
+		"title": "producto nuevo",
+		"description": "este es otro producto",
+		"price": 456,
+		"thumbnail": "img53",
+		"code": "rthbew",
+		"status": 45,
+		"id": 4
+	},
+	{
+		"title": "producto nuevo",
+		"description": "este es otro producto",
+		"price": 456,
+		"thumbnail": [],
+		"code": "img53",
+		"status": true,
+		"category": "erwe",
+		"stock": 45,
+		"id": 5
+	},
+	{
+		"title": "producto nuevo",
+		"description": "este es otro producto",
+		"price": "45",
+		"thumbnail": "img53",
+		"code": "rthbew",
+		"status": true,
+		"category": 45,
+		"id": 6
+	}
+]

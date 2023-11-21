@@ -18,4 +18,4 @@ app.get("/", (req,res)=>{
 app.use("/api/products", productsRouter)
 app.use("/api/cart", cartRouter)
 
-app.listen(PORT, ()=> console.log(`Server listeningo on port ${PORT}`))
+app.listen(PORT, ()=> console.log(`Server listening on port ${PORT}`))

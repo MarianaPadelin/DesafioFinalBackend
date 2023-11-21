@@ -1,18 +1,14 @@
 [
 	{
-		"title": "item1",
+		"products": [],
 		"id": 1
 	},
 	{
-		"title": "item2",
+		"products": [],
 		"id": 2
 	},
 	{
-		"title": "item3",
+		"products": [],
 		"id": 3
-	},
-	{
-		"products": "1234",
-		"id": 4
 	}
 ]

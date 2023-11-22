@@ -34,80 +34,53 @@ class CartManager {
     return this.cart;
   }
 
-   getCartById(idCart) {
-    const carritoSolicitado = this.cart.find((elemento) => elemento.id === idCart);
+  getCartById(idCart) {
+    const carritoSolicitado = this.cart.find(
+      (elemento) => elemento.id === idCart
+    );
 
     if (!carritoSolicitado) {
       console.log(`No existe el carrito con id ${idCart}`);
     }
 
-    console.log(carritoSolicitado);
     return carritoSolicitado;
   }
 
-  async addProduct(cid, pid, cantidad) {
+  async addProduct(cid, pid) {
     const carrito = await this.getCartById(cid);
 
-    try{
-        let productoRepetido = carrito.products.find((elemento) => elemento.pid === pid)
-        if(!productoRepetido){
-            let quantity = 1
-             carrito.products.push({ pid, quantity });
-             await fs.promises.writeFile(
-        this.path,
-        JSON.stringify(this.cart, null, "\t")
+    try {
+      let productoRepetido = carrito.products.find(
+        (elemento) => elemento.pid === pid
       );
-        }
-
-        let quantity = cantidad
+      if (!productoRepetido) {
+        let quantity = 1;
         carrito.products.push({ pid, quantity });
         await fs.promises.writeFile(
           this.path,
           JSON.stringify(this.cart, null, "\t")
         );
-    }catch(e){
-        return e
+      }
+
+      let nuevaCantidad = productoRepetido.quantity + 1;
+
+      productoRepetido.quantity = nuevaCantidad;
+      console.log(productoRepetido.quantity);
+
+      await fs.promises.writeFile(
+        this.path,
+        JSON.stringify(this.cart, null, "\t")
+      );
+    } catch (e) {
+      return e;
     }
-        
-    
-
-
-
-    // try {
-    //   if (this.products.length === 0) {
-    //     prod.id = 1;
-    //   } else {
-    //     prod.id = this.cart[this.products.length - 1].id + 1;
-    //   }
-    //   this.products.push(prod);
-    //   await fs.promises.writeFile(
-    //     this.path,
-    //     JSON.stringify(this.cart, null, "\t")
-    //   );
-    // } catch (e) {
-    //   console.log(`Hay un error ${e}`);
-    // }
-  }                             
-}
-
-
-
-class Item {
-    //como hago para crear un array aca?
-  constructor() {
-     (this.products = []);
   }
 }
 
+class Item {
+  constructor() {
+    this.products = [];
+  }
+}
 
 export { CartManager, Item };
-//--------
-// const myCart = new CartManager();
-
-// myCart.addItem(
-//     new Item(
-//         "item3"
-//     )
-// )
-
-// console.log(myCart.getCart());

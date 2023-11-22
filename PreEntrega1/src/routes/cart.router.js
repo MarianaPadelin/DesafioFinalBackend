@@ -58,10 +58,9 @@ cartRouter.post("/", async (req, res) => {
 cartRouter.post("/:cid/product/:pid", async (req, res) => {
   const { cid } = req.params;
   const { pid } = req.params;
-  const { cantidad } = req.body;
 
   try {
-    await myCart.addProduct(+cid, +pid, +cantidad);
+    await myCart.addProduct(+cid, +pid);
 
     res.json({
       message: `Product ${pid} added to cart ${cid}`,

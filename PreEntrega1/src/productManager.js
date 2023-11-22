@@ -21,13 +21,10 @@ class ProductManager {
           : (existeCodigo = false);
       });
 
-
       if (existeCodigo === true) {
         console.log("El código ya existe");
         throw Error(`Product with code ${product.code} already exists`);
-        
       }
-
 
       //si todo salió bien
       console.log("Éxito");
@@ -44,7 +41,7 @@ class ProductManager {
       );
     } catch (error) {
       console.log(`Hay un error: ${error}`);
-      throw (`Hay un error: ${error}`);
+      throw `Hay un error: ${error}`;
     }
   }
 
@@ -60,9 +57,9 @@ class ProductManager {
     );
 
     if (!producto) {
-      console.log(`no existe el id ${idProducto}`)
+      console.log(`no existe el id ${idProducto}`);
     } else {
-      return ("El producto encontrado es", producto);
+      return "El producto encontrado es", producto;
     }
   }
 
@@ -72,8 +69,7 @@ class ProductManager {
     );
     if (!productoAmodificar) {
       console.log("Error. El producto no existe.");
-      throw Error("el producto no existe")
-
+      throw Error("el producto no existe");
     }
 
     productoAmodificar[key] = newValue;
@@ -110,48 +106,17 @@ class ProductManager {
 }
 
 class Product {
-  constructor(title, description, price, thumbnail, code, category, stock) {
+  constructor(title, description, price, code, category, stock, thumbnail) {
     (this.title = title),
       (this.description = description),
-      (this.price = price),
-      (this.thumbnail = thumbnail),
+      (this.price = +price),
       (this.code = code),
       (this.status = true),
       (this.category = category),
-      (this.stock = stock);
+      (this.stock = +stock),
+      (this.thumbnail = [thumbnail]);
   }
 }
 
 export { ProductManager, Product };
 
-//-------- Pruebas --------
-
-// 1) Instancio la clase
-// const prueboProducto = new ProductManager();
-
-// 2) Agrego productos y pruebo las validaciones. Si hay campos vacios o si se repite el código, no se agregan
-// prueboProducto.addProduct(
-//   new Product(
-//     "Producto prueba1",
-//     "Este es un producto prueba",
-//     2030,
-//     "SinImagen",
-//     "abc143",
-//     true,
-//     "cat1",
-//     "44"
-//   )
-// );
-
-
-// 3) Busco productos por id
-// prueboProducto.getProductById(2);
-
-// // 4) Borro productos por id
-// prueboProducto.deleteProduct(2);
-
-// // 5) Actualizo productos por parámetros (id, llave, valor a modificar)
-// prueboProducto.updateProduct(2, "title", "producto2");
-
-// 6) Por último obtengo el array de productos final
-// console.log(prueboProducto.getProducts())

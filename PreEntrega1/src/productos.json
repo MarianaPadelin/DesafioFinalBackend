@@ -11,22 +11,12 @@
 		"id": 1
 	},
 	{
-		"title": "producto nuevo",
-		"description": "este es otro producto",
-		"price": "5783",
-		"thumbnail": "img53",
-		"code": "sgrtg",
+		"title": "modificado",
+		"description": "producto modificado",
+		"price": 566,
 		"status": 45,
-		"id": 2
-	},
-	{
-		"title": "producto nuevo",
-		"description": "este es otro producto",
-		"price": "5783",
-		"thumbnail": "img53",
-		"code": "eegfrw",
-		"status": 45,
-		"id": 3
+		"id": 3,
+		"stock": 34
 	},
 	{
 		"title": "producto nuevo",

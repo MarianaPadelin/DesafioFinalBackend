@@ -4,12 +4,12 @@ import { productValidation } from "../utils/productValidation.js";
 
 //faltan los status
 
-//falta metodo put
 //falta array de imagenes en thumbnail
+
 
 const productsRouter = Router();
 
-const prueboProducto = new ProductManager();
+const prueboProducto = new ProductManager("./src/productos.json");
 
 productsRouter.get("/", async (req, res) => {
   const datosImportados = await prueboProducto.getProducts();
@@ -31,28 +31,28 @@ productsRouter.get("/:id", async (req, res) => {
   const { id } = req.params;
   let datosImportados = await prueboProducto.getProductById(+id);
 
-  if(!datosImportados){
-      return res.json({
-          message: `No existe el producto con id ${id}`
-      })
+  if (!datosImportados) {
+    return res.json({
+      message: `No existe el producto con id ${id}`,
+    });
   }
   return res.json({
-      datosImportados
-  })
-
-
+    datosImportados,
+  });
 });
 
 productsRouter.post("/", productValidation, async (req, res) => {
-  const { title, description, price, thumbnail, code, stock } = req.body;
+  const { title, description, price, code, category, stock, thumbnail } =
+    req.body;
 
   const producto = new Product(
     title,
     description,
     price,
-    thumbnail,
     code,
-    stock
+    category,
+    stock,
+    thumbnail
   );
 
   try {
@@ -62,6 +62,7 @@ productsRouter.post("/", productValidation, async (req, res) => {
       producto,
     });
   } catch (e) {
+    console.log(producto)
     res.json({
       error: e.message,
     });
@@ -96,10 +97,17 @@ productsRouter.post("/", productValidation, async (req, res) => {
 
 productsRouter.put("/:id", async (req, res) => {
   const { id } = req.params;
-  const { title } = req.body;
-  const producto = new Product(
-    title,
-  );
+  const { title, description, price, thumbnail, code, category, stock } =
+    req.body;
+  //   const producto = new Product(
+  //     title,
+  //     description,
+  //     price,
+  //     thumbnail,
+  //     code,
+  //     category,
+  //     stock
+  //   );
 
   if (!id) {
     return res.json({
@@ -108,14 +116,19 @@ productsRouter.put("/:id", async (req, res) => {
   }
 
   try {
-    //acá tengo el problema, se manda el res correctamente, pero el updateProduct no hace nada, no actualiza el archivo json. 
-    await prueboProducto.updateProduct(+id, title);
-    let productoModificado = await prueboProducto.getProductById(+id)
-    
+    //acá tengo el problema, se manda el res correctamente, pero el updateProduct no hace nada, no actualiza el archivo json.
+    await prueboProducto.updateProduct(+id, "title", title);
+    await prueboProducto.updateProduct(+id, "description", description);
+    await prueboProducto.updateProduct(+id, "price", price);
+    await prueboProducto.updateProduct(+id, "thumbnail", thumbnail);
+    await prueboProducto.updateProduct(+id, "code", code);
+    await prueboProducto.updateProduct(+id, "category", category);
+    await prueboProducto.updateProduct(+id, "stock", stock);
+    let productoModificado = await prueboProducto.getProductById(+id);
+
     res.json({
       message: "Post updated",
-      producto,
-      productoModificado
+      productoModificado,
     });
   } catch (e) {
     res.json({

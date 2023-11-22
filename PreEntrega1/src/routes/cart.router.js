@@ -5,7 +5,6 @@ const cartRouter = Router();
 
 const myCart = new CartManager("./src/carrito.json");
 
-
 cartRouter.get("/", async (req, res) => {
   const carrito = await myCart.getCart();
 
@@ -30,7 +29,7 @@ cartRouter.get("/:cid", async (req, res) => {
 
   if (!carritoEncontrado) {
     return res.json({
-      message: `no existe el carrito con id ${ cid }`,
+      message: `no existe el carrito con id ${cid}`,
     });
   }
   res.json({
@@ -40,8 +39,6 @@ cartRouter.get("/:cid", async (req, res) => {
 
 cartRouter.post("/", async (req, res) => {
   const { products } = req.body;
-
-
 
   const item = new Item(products);
 
@@ -59,18 +56,21 @@ cartRouter.post("/", async (req, res) => {
 });
 
 cartRouter.post("/:cid/product/:pid", async (req, res) => {
-
   const { cid } = req.params;
   const { pid } = req.params;
+  const { cantidad } = req.body;
 
+  try {
+    await myCart.addProduct(+cid, +pid, +cantidad);
 
-const nuevoProducto = await myCart.addProduct(+cid, +pid)
-
-  res.json({
-    message: "Se agregó el producto",
-    nuevoProducto
-  })
-
+    res.json({
+      message: `Product ${pid} added to cart ${cid}`,
+    });
+  } catch (e) {
+    res.json({
+        error: e
+    })
+  }
 });
 
 export default cartRouter;

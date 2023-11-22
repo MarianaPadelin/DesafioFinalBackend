@@ -2,7 +2,7 @@ import fs from "fs";
 
 class ProductManager {
   constructor() {
-    //esto tiene que ser productos.json
+
     this.path = "./src/productos.json";
     try {
       let products = fs.readFileSync(this.path, "utf-8");
@@ -14,20 +14,16 @@ class ProductManager {
 
   async addProduct(product) {
     try {
-      let existeCodigo = false;
-      this.products.forEach((prod) => {
-        prod.code.includes(product.code)
-          ? (existeCodigo = true)
-          : (existeCodigo = false);
-      });
+      const codigoRepetido = this.products.find(
+        (prod) => prod.id === product.id
+      );
 
-      if (existeCodigo === true) {
+      if (codigoRepetido === true) {
         console.log("El código ya existe");
         throw Error(`Product with code ${product.code} already exists`);
       }
 
-      //si todo salió bien
-      console.log("Éxito");
+      console.log("Producto agregado");
 
       if (this.products.length === 0) {
         product.id = 1;
@@ -87,7 +83,7 @@ class ProductManager {
     );
 
     if (!productoEncontrado) {
-      return console.log("No se puede borrar. El producto no existe");
+      throw Error ("No se puede borrar. El producto no existe");
     }
 
     try {
@@ -99,8 +95,8 @@ class ProductManager {
       );
       console.log("Producto borrado");
     } catch (error) {
-      console.log(`Hubo un error al guardar los datos: ${error}`);
-      return;
+      throw Error (`Hubo un error al guardar los datos: ${error}`);
+     
     }
   }
 }

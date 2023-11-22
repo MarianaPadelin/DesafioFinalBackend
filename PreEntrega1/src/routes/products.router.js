@@ -2,10 +2,6 @@ import { Router } from "express";
 import { ProductManager, Product } from "../productManager.js";
 import { productValidation } from "../utils/productValidation.js";
 
-//faltan los status
-
-//falta array de imagenes en thumbnail
-
 
 const productsRouter = Router();
 
@@ -69,45 +65,11 @@ productsRouter.post("/", productValidation, async (req, res) => {
   }
 });
 
-//   const datosImportados = await prueboProducto.getProducts();
-
-//pusheo lo que agrego al array en memoria
-//   datosImportados.push({
-//     title,
-//     description,
-//     price,
-//     thumbnail,
-//     code,
-//     stock
-//   });
-
-//me muestra lo que agregué recién
-
-//   res.json({
-//     datosImportados: {
-//       title,
-//       description,
-//       price,
-//       thumbnail,
-//       code,
-//       stock,
-//     },
-//   });
-// });
 
 productsRouter.put("/:id", async (req, res) => {
   const { id } = req.params;
   const { title, description, price, thumbnail, code, category, stock } =
     req.body;
-  //   const producto = new Product(
-  //     title,
-  //     description,
-  //     price,
-  //     thumbnail,
-  //     code,
-  //     category,
-  //     stock
-  //   );
 
   if (!id) {
     return res.json({
@@ -116,7 +78,7 @@ productsRouter.put("/:id", async (req, res) => {
   }
 
   try {
-    //acá tengo el problema, se manda el res correctamente, pero el updateProduct no hace nada, no actualiza el archivo json.
+
     await prueboProducto.updateProduct(+id, "title", title);
     await prueboProducto.updateProduct(+id, "description", description);
     await prueboProducto.updateProduct(+id, "price", price);

@@ -1,51 +1,49 @@
 [
 	{
-		"title": "Producto prueba1",
-		"description": "Este es un producto prueba",
-		"price": 2030,
-		"thumbnail": "SinImagen",
-		"code": "abc143",
+		"title": "producto nuevo",
+		"description": "este es otro producto",
+		"price": 123,
+		"code": "hytwrw",
 		"status": true,
 		"category": "cat1",
-		"stock": "44",
+		"stock": 55,
+		"thumbnail": [
+			[
+				"img1",
+				"img2",
+				"img3"
+			]
+		],
 		"id": 1
 	},
 	{
-		"title": "modificado",
-		"description": "producto modificado",
-		"price": 566,
-		"status": 45,
-		"id": 3,
-		"stock": 34
-	},
-	{
 		"title": "producto nuevo",
 		"description": "este es otro producto",
-		"price": 456,
-		"thumbnail": "img53",
-		"code": "rthbew",
-		"status": 45,
-		"id": 4
-	},
-	{
-		"title": "producto nuevo",
-		"description": "este es otro producto",
-		"price": 456,
-		"thumbnail": [],
-		"code": "img53",
+		"price": 345,
+		"code": "tjyntr",
 		"status": true,
-		"category": "erwe",
-		"stock": 45,
-		"id": 5
+		"category": "cat1",
+		"stock": 67,
+		"thumbnail": [
+			[
+				"img1",
+				"img2",
+				"img3"
+			]
+		],
+		"id": 2
 	},
 	{
 		"title": "producto nuevo",
 		"description": "este es otro producto",
-		"price": "45",
-		"thumbnail": "img53",
-		"code": "rthbew",
+		"price": 2000,
+		"code": "123ghi",
 		"status": true,
-		"category": 45,
-		"id": 6
+		"category": "cat2",
+		"stock": 3,
+		"thumbnail": [
+			null
+		],
+		"id": 3
 	}
 ]

@@ -45,7 +45,7 @@ class CartManager {
     return carritoSolicitado;
   }
 
-  async addProduct(cid, pid) {
+  async addProduct(cid, pid, cantidad) {
     const carrito = await this.getCartById(cid);
 
     try{
@@ -58,11 +58,9 @@ class CartManager {
         JSON.stringify(this.cart, null, "\t")
       );
         }
-        // product.id = this.products[this.products.length - 1].id + 1;
-        carrito.products.quantity = this.carrito.products.quantity +1
-        console.log(carrito.products)
-        // let newQuantity = carrito.products.quantity + 1
-        // carrito.products.push({ newQuantity });
+
+        let quantity = cantidad
+        carrito.products.push({ pid, quantity });
         await fs.promises.writeFile(
           this.path,
           JSON.stringify(this.cart, null, "\t")

@@ -58,8 +58,8 @@ app.use(express.urlencoded({ extended: true }));
 //mongoose
 
 mongoose
-  .connect("mongodb://127.0.0.1:27017/PracticaIntegradora")
-  .then(() => {
+  .connect("mongodb://127.0.0.1:27017/SegundaPreEntrega")
+  .then(() => { 
     console.log("DB connected");
   })
   .catch((err) => {

@@ -82,7 +82,7 @@ class CartDao {
         if (cartFound) {
           //dentro del carrito, busco si ya existe el producto
           const productoRepetido = await productModel.findById(
-            "6581cb7a69ccfafa5939a286"
+            "65980f4c3fbacd8e8720e03e"
           );
 
           console.log(productoRepetido);
@@ -91,7 +91,7 @@ class CartDao {
           if (!productoRepetido) {
             //si el producto no está, lo pusheo al array
             const prodAgregado = cartFound.products.push(
-              "6581cb7a69ccfafa5939a286"
+              "65980f4c3fbacd8e8720e03e"
             );
 
             console.log("El producto es nuevo");
@@ -115,17 +115,20 @@ class CartDao {
             console.log(result.products);
             return;
           } else {
-            //  si el producto ya existe, le agrego 1 a quantity
-            const nuevaCantidad = productoRepetido.quantity + 1;
-            productoRepetido.quantity = nuevaCantidad;
-            // console.log("Producto repetido", nuevaCantidad);
+
+            //Llego hasta acá, pero no me toma la propiedad .quantity
+ 
+            const nuevaCantidad = productoRepetido.quantity +1
+            // productoRepetido.quantity = nuevaCantidad;
+
+            console.log("Producto repetido", nuevaCantidad);
 
             //actualizo en la base de datos.
             const result = await cartModel.findByIdAndUpdate(
               { _id: cartFound._id },
               cartFound
             );
-            console.log(result.products);
+            // console.log(result.products);
           }
 
           //actualizo en la base de datos.
@@ -133,7 +136,7 @@ class CartDao {
             { _id: cartFound._id },
             cartFound
           );
-          console.log(result.products);
+          // console.log(result.products);
         }
         return "Cart not found";
       }

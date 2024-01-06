@@ -115,13 +115,15 @@ class CartDao {
             console.log(result.products);
             return;
           } else {
+            const prodEncontrado = cartFound.products.find(
+              (product) => product._id == "65980f4c3fbacd8e8720e03e"
+            );
 
-            //Llego hasta acá, pero no me toma la propiedad .quantity
- 
-            const nuevaCantidad = productoRepetido.quantity +1
-            // productoRepetido.quantity = nuevaCantidad;
-
-            console.log("Producto repetido", nuevaCantidad);
+            console.log(prodEncontrado)
+            // const nuevaCantidad = cartFound.products[0].quantity + 1;
+            // cartFound.products[0].quantity = nuevaCantidad;
+              prodEncontrado.quantity = prodEncontrado.quantity++
+            console.log("Producto repetido", prodEncontrado.quantity);
 
             //actualizo en la base de datos.
             const result = await cartModel.findByIdAndUpdate(
@@ -163,7 +165,6 @@ class CartDao {
             "6581cb7a69ccfafa5939a286"
           );
           console.log(productosBorrados);
-
 
           //lo guardo en la base de datos
           // const result = await cartModel.findByIdAndUpdate(

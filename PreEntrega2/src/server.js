@@ -9,11 +9,6 @@ import { Server } from "socket.io";
 import messagesDao from "./daos/dbManager/messages.dao.js";
 import Handlebars from "handlebars";
 import { allowInsecurePrototypeAccess } from "@handlebars/allow-prototype-access";
-//esto es para recorrer el array en las views (cuando es un array de objetos) 
-
-
-//no anda: addProductToCart (aumentar la quantity), deleteOneProduct, populate, pagination. 
-//salta error en la vista del home por error con query
 
 
 const app = express();
@@ -27,14 +22,13 @@ const httpServer = app.listen(PORT, () =>
 
 const io = new Server(httpServer);
 
-//este array lo tengo que guardar en mongo?
 const messages = [];
 
 io.on("connection", (socket) => {
   console.log("Nuevo usuario conectado");
 
   socket.on("message", (data) => {
-    // console.log(data.message);
+
     messages.push(data);
 
     messagesDao.addMessage(data)

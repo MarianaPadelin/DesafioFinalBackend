@@ -5,8 +5,6 @@ class ProductDao {
   async addProduct(nuevoProducto) {
 
     try {
-      // const prodValidado = nuevoProducto.validate()
-      // console.log(prodValidado)
       if (nuevoProducto) {
         return await productModel.create(nuevoProducto);
       }
@@ -28,7 +26,6 @@ class ProductDao {
 
   async getProductById(_id) {
     try {
-      //Propiedad de mongoose para verificar tipos de datos
       if (mongoose.Types.ObjectId.isValid(_id)) {
         const productFound = await productModel.findById({ _id });
 

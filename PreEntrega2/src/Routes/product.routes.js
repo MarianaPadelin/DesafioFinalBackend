@@ -30,7 +30,6 @@ router.get("/", async (req, res) => {
       fileCss: "index.css",
     });
 
-    //  console.log("status(200)", products)
   } catch (error) {
     ProductDao.errorMessage(error);
   }
@@ -52,7 +51,7 @@ router.get("/:id", async (req, res) => {
         product,
       });
     }
-    //anda bien pero se me tilda el codigo en consola
+
   } catch (error) {
     ProductDao.errorMessage(error);
   }
@@ -87,7 +86,6 @@ router.put("/:id", async (req, res) => {
 
     const product = await ProductDao.modifyProduct(id, req.body);
 
-    //para devolver el producto actualizado volver a hacer un findBYId de este mismo producto acá
 
     if (!product) {
       console.log("id not found");
@@ -124,11 +122,7 @@ router.delete("/:id", async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    res.status(404).json({
-      error,
-      message: "Error",
-    });
-    // ProductDao.errorMessage(error);
+    ProductDao.errorMessage(error);
   }
 });
 

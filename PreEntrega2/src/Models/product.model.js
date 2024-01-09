@@ -12,8 +12,6 @@ const productSchema = new Schema({
   thumbnails: { type: String, required: true },
 });
 
-//orden en el que aparecen los productos, se pueden poner varios parámetros y la prioridad depende del orden en que se escriban
-productSchema.index({ price: 1 })
 
 
 //plugin de paginate

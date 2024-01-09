@@ -13,13 +13,7 @@ class CartDao {
         const cartFound = await cartModel.findById({ _id });
 
         if (cartFound) {
-          // const productoPoblado = cartFound.products.find(
-          //   (producto) => producto._id == _pid
-          // );
-          // await cartModel.findById(_pid).populate("products");
-
           return await cartModel.findById(_id).populate("products._id")
-
           
         }
         return "Cart not found";

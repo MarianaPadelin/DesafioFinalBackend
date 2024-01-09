@@ -1,43 +1,36 @@
 import { Router } from "express";
 import ProductDao from "../daos/dbManager/product.dao.js";
 import { productModel } from "../Models/product.model.js";
-// import { productModel } from "../Models/product.model.js";
-// import { cartModel } from "../Models/cart.js";
-// import cartDao from "../daos/dbManager/cart.dao.js";
 
 const router = Router();
 
 router.get("/", async (req, res) => {
   try {
-    const { page, limit } = req.query;
-    //no es req.params?
+    const { limit, page, category, stock } = req.query;
+    let filter = {};
+    if (category) {
+      filter.category = category;
+    };
+    if(stock){
+      filter.stock = stock;
+    }
 
-    const products = await productModel
-      .paginate(
-        {
-          //criterio de busqueda
-          //por categoria o por stock
-        },
-        {
-          //paginación
-          //status, prevLink, nextLink
-          page: page || 1,
-          totalPages: 0, 
-          limit: limit || 10,
-          //hacer validacion de false si es la primer o ultima pagina
-          hasPrevPage: true,
-          hasNextPage: true, 
-          prevPage: (page -1),
-          nextPage: (page + 1),
-        }
-      )
-      // .sort({ price: 1 });
+    const products = await productModel.paginate(
+      filter,
 
-    // const products = await ProductDao.getAllProducts();
-    res.json({
-      message: "Post list",
-      data: products,
+      {
+        page: page || 1,
+        limit: limit || 10,
+        sort: { price: 1 },
+      }
+    );
+
+    res.status(200).render("index", {
+      products,
+      fileCss: "index.css",
     });
+
+    //  console.log("status(200)", products)
   } catch (error) {
     ProductDao.errorMessage(error);
   }
@@ -93,8 +86,8 @@ router.put("/:id", async (req, res) => {
     const { id } = req.params;
 
     const product = await ProductDao.modifyProduct(id, req.body);
-    
-//para devolver el producto actualizado volver a hacer un findBYId de este mismo producto acá
+
+    //para devolver el producto actualizado volver a hacer un findBYId de este mismo producto acá
 
     if (!product) {
       console.log("id not found");

@@ -14,7 +14,7 @@
       <th>THUMBNAILS</th>
     </tr>
     <tbody>
-   {{#each products}}
+   {{#each products.docs}}
     <tr>
       <td>{{this.id}}</td>
       <td>{{this.title}}</td>
@@ -30,6 +30,35 @@
     </tbody>
   </table>
 <br>
+
+
+  <div class="position-relative m-4">
+
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        {{#if products.hasPrevPage}}
+          <li class="page-item"><a
+              class="page-link"
+              href="/api/products/?page={{products.prevPage}}&&limit={{products.limit}}"
+            >Previous</a></li>
+        {{/if}}
+
+
+
+        {{#if products.hasNextPage}}
+          <li class="page-item"><a
+              class="page-link"
+              href="/api/products/?page={{products.nextPage}}&&limit={{products.limit}}"
+            >Next</a></li>
+        {{/if}}
+
+      </ul>
+    </nav>
+    <p>
+      Current Page:
+      {{products.page}}
+    </p>
+  </div>
 <a href="/chat"><button> Ir al chat </button></a>
 <a href="/api/carts"><button> Ir al carrito </button></a>
 

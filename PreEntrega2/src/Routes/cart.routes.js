@@ -6,7 +6,7 @@ const router = Router();
 router.get("/", async (req, res) => {
   try {
     const carts = await CartDao.findCart();
-    console.log(carts);
+    // console.log(carts);
     res.json({
       message: "These are the carts:",
       data: carts,
@@ -19,10 +19,12 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
+    // const { pid } = req.params
     const cart = await CartDao.findCartById(id);
 
     if (!cart) {
       console.log("cart not found");
+
       res.status(404).json({
         message: "Cart not found",
       });
@@ -106,6 +108,33 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+
+router.put("/:cid/product/:pid", async (req, res) => {
+  const { cid } = req.params;
+  const { pid } = req.params;
+  const { quantity } = req.body
+
+  try {
+
+    const cart = await CartDao.updateOneProduct(cid, pid, quantity);
+
+    if (cart === false) {
+      res.status(404).json({
+        message: `Cart ${cid} not found`,
+      });
+    } else {
+      res.json({
+        message: `Product ${pid} quantity updated in cart ${cid}`,
+      });
+    }
+  } catch (e) {
+    res.json({
+      error: e,
+    });
+  }
+});
+
+
 router.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -134,7 +163,7 @@ router.delete("/:cid/product/:pid", async (req, res) => {
     const cart = await CartDao.deleteOneProduct(cid, pid);
 
     if (cart === false) {
-      // console.log("cart not found");
+
       res.status(404).json({
         message: `Cart ${cid} not found`,
       });

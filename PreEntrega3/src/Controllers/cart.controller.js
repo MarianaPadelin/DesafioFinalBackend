@@ -47,8 +47,11 @@ export const postCart = async (req, res) => {
   //tengo que agarrar el id del usuario
   try {
     //del req.body saco la cantidad
+    const userId = req.user.id
+    console.log("el user id es:" + userId)
     const cart = await createCart(req.body);
     res.json({
+      message: "hola", 
       data: cart,
     });
   } catch (error) {

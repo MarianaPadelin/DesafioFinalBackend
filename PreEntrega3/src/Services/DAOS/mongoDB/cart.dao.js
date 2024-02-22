@@ -166,11 +166,9 @@ class CartDao {
 
   errorMessage(error) {
     console.log(error);
-    res.json({
-      error,
-      message: "Error",
-    });
+    return error
   }
 }
+
 
 export default new CartDao();

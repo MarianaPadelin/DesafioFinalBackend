@@ -46,13 +46,11 @@ export const getOneCart = async (req, res) => {
 export const postCart = async (req, res) => {
 
   try {
-
-    // const userId = req.user._id
-    // console.log("el user id es:" + userId)
-    const cart = await createCart(req.body);
-    res.json({
+    const cart = await createCart();
+    res.send({
       data: cart,
     });
+    // return cart;
   } catch (error) {
     CartDao.errorMessage(error);
   }

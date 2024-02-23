@@ -9,12 +9,13 @@ export const validateCart = async (id) => {
   }
 };
 
-export const createCart = async (cart) => {
-  const carrito = await CartDao.createCart(cart);
+export const createCart = async () => {
+  const carrito = await CartDao.createCart();
   if (carrito === false) {
     console.log("Couldn't create cart");
     return { status: 404, message: "Couldn't create cart" };
   } else {
+    //payload: carrito._id
     return { status: 200, message: "New cart created", payload: carrito };
   }
 };

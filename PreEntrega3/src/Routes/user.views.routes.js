@@ -30,6 +30,6 @@ router.get("/",
 // });
 
 
-router.get("/generateCart", postCart)
+// router.get("/generateCart", postCart)
 
 export default router;

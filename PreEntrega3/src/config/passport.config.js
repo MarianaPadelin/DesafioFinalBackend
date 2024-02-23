@@ -5,6 +5,7 @@ import { userModel } from "../Services/Models/user.model.js";
 import jwtStrategy from "passport-jwt";
 import GitHubStrategy from "passport-github2"
 import config from "./config.js";
+import { postCart } from "../Controllers/cart.controller.js";
 
 
 //Declaramos la estrategia (qué tipo de passport voy a usar)
@@ -105,7 +106,14 @@ const inicializePassport = () => {
             //null es porque no hay un error, false es porque el usuario ya existe
             done(null, false);
           }
+          
+          //acá va el método crear carrito, sacar su id y meterlo dentro del objeto de user que está a continuación
+          
+          postCart()
+          // console.log("creando carrito")
 
+
+      
           const user = {
             first_name,
             last_name,
@@ -113,11 +121,13 @@ const inicializePassport = () => {
             email,
             //uso la función create hash para encriptar la contraseña que agarro del body
             password: createHash(password),
+            // cid,
           };
-
+  
           const result = await userModel.create(user);
           return done(null, result);
         } catch (error) {
+          console.log(error)
           return done("Error de register" + error);
         }
       }

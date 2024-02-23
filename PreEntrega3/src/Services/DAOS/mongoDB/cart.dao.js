@@ -19,10 +19,11 @@ class CartDao {
     }
   }
 
-  async createCart(cart) {
+  async createCart() {
     try {
-      //push al array de cart dentro de userModel
-      return await cartModel.create(cart);
+      const newCart = await cartModel.create();
+      console.log("carrito creado " + newCart)
+      return newCart 
     } catch (error) {
       console.log(error);
     }

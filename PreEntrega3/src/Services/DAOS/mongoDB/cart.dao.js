@@ -1,6 +1,5 @@
 import { cartModel } from "../../Models/cart.model.js";
 import mongoose from "mongoose";
-// import { productModel } from "../../Models/product.model.js";
 
 //borrar las validaciones de si existe el carrito
 class CartDao {
@@ -21,8 +20,9 @@ class CartDao {
 
   async createCart() {
     try {
-      const newCart = await cartModel.create();
-      console.log("carrito creado " + newCart)
+      //acá iría el populate?
+      const newCart = await cartModel.create()
+      console.log("carrito creado " + { newCart })
       return newCart 
     } catch (error) {
       console.log(error);

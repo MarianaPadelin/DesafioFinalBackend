@@ -1,3 +1,5 @@
+//en vez de esto tengo que importar el repository
+
 import {
   addProduct,
   createCart,
@@ -26,7 +28,7 @@ export const getCarts = async (req, res) => {
 
 export const getOneCart = async (req, res) => {
   try {
-    console.log("llego a la fc getOneCart" + id)
+    // console.log("llego a la fc getOneCart" + id)
     const { id } = req.params;
     const cart = await validateCart(id);
     res.json({

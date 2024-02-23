@@ -27,14 +27,14 @@ const ticketSchema = new Schema({
       purchase_datetime: { type: String, ref: "products" }, //ver donde va la funcion created_at
     },
   ],
-  totalPrice: { type: Number }, //función reduce
-  purchaser: [
+  totalPrice: Number, //función reduce
+  purchaser:
     {
       first_name: { type: String, ref: "users" },
       last_name: { type: String, ref: "users" },
       email: { type: String, ref: "users" },
     },
-  ],
+  
 });
 
 const ticketModel = model("ticket", ticketSchema)

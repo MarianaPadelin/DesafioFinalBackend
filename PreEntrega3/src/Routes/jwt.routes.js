@@ -10,7 +10,6 @@ import {
 
 const router = Router();
 
-
 //validar admin mail desde register en vez de login
 
 router.post("/login", logUser);
@@ -18,13 +17,10 @@ router.post("/login", logUser);
 // Register PassportLocal
 router.post(
   "/register",
-  passport.authenticate(
-    "register",
-    { session: false },
-    {
-      failureRedirect: "api/jwt/fail-register",
-    }
-  ),
+  passport.authenticate("register", {
+    session: false,
+    failureRedirect: "api/jwt/fail-register",
+  }),
   register
 );
 
@@ -54,6 +50,5 @@ router.get("/fail-register", failRegister);
 // router.get("/fail-login", (req, res) => {
 //   res.status(401).send({ error: "Falla al iniciar sesión" });
 // });
-
 
 export default router;

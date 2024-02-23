@@ -20,7 +20,7 @@ form.addEventListener("submit", e => {
     }).then((result) => {
       if (result.status === 201) {
         alert("Usuario registrado correctamente")
-        window.location.replace("/");
+        return window.location.replace("/");
       }
       alert("El usuario ya existe")
     }).catch((error) => {

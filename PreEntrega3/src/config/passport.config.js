@@ -5,10 +5,11 @@ import { userModel } from "../Services/Models/user.model.js";
 import jwtStrategy from "passport-jwt";
 import GitHubStrategy from "passport-github2"
 import config from "./config.js";
-import { postCart } from "../Controllers/cart.controller.js";
+import cartDao from "../Services/DAOS/mongoDB/cart.dao.js";
 
 
 //Declaramos la estrategia (qué tipo de passport voy a usar)
+//crear carrito en estrategia github
 
 const localStrategy = passportLocal.Strategy;
 
@@ -109,8 +110,10 @@ const inicializePassport = () => {
           
           //acá va el método crear carrito, sacar su id y meterlo dentro del objeto de user que está a continuación
           
-          postCart()
-          // console.log("creando carrito")
+
+          const newCart = await cartDao.createCart()
+
+          
 
 
       
@@ -121,7 +124,7 @@ const inicializePassport = () => {
             email,
             //uso la función create hash para encriptar la contraseña que agarro del body
             password: createHash(password),
-            // cid,
+            cart: newCart,
           };
   
           const result = await userModel.create(user);

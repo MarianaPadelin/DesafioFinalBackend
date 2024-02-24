@@ -4,10 +4,12 @@
 <h4>Esta es la información de usuario:</h4>
   <p>Edad: {{age}}</p>
   <p>Email: {{email}}</p>
+  <p>Cart: {{cart}}</p>
+  
 
-
-<a href="/users/generateCart"><button> Generar un carrito </button></a>
-   
+{{!-- acá el :id tiene que ser dinámico --}}
+<a href="api/carts/{{cart}}"><button> Ver mi carrito </button></a>
+   {{!-- <button id="goToCart"> Ver mi carrito </button> --}}
   <button  id="botonLogout" type="submit">LOGOUT</button>
 
 

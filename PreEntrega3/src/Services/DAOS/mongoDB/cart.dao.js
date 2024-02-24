@@ -18,11 +18,13 @@ class CartDao {
     }
   }
 
-  async createCart() {
+  async createCart(cart) {
     try {
-      //acá iría el populate?
-      const newCart = await cartModel.create()
-      console.log("carrito creado " + { newCart })
+
+      const newCart = await cartModel.create(cart)
+
+      // console.log("carrito creado " + newCart)
+
       return newCart 
     } catch (error) {
       console.log(error);

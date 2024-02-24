@@ -16,6 +16,8 @@ router.get("/",
 );
 
 
+
+
 // router.get("/:userId", authToken, async (req, res) => {
 //   const userId = req.params.userId;
 //   try {
@@ -30,6 +32,6 @@ router.get("/",
 // });
 
 
-// router.get("/generateCart", postCart)
+
 
 export default router;

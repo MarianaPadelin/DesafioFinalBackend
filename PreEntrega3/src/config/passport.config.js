@@ -107,26 +107,22 @@ const inicializePassport = () => {
             //null es porque no hay un error, false es porque el usuario ya existe
             done(null, false);
           }
-          
+
           //acá va el método crear carrito, sacar su id y meterlo dentro del objeto de user que está a continuación
-          
+          let cart = {};
 
-          const newCart = await cartDao.createCart()
+          const newCart = await cartDao.createCart(cart);
+          console.log(newCart._id);
 
-          
-
-
-      
           const user = {
             first_name,
             last_name,
             age,
             email,
-            //uso la función create hash para encriptar la contraseña que agarro del body
             password: createHash(password),
             cart: newCart,
           };
-  
+
           const result = await userModel.create(user);
           return done(null, result);
         } catch (error) {

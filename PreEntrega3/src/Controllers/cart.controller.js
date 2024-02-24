@@ -28,8 +28,9 @@ export const getCarts = async (req, res) => {
 
 export const getOneCart = async (req, res) => {
   try {
-    // console.log("llego a la fc getOneCart" + id)
+
     const { id } = req.params;
+
     const cart = await validateCart(id);
     res.json({
       message: `This is the cart with id ${id}:`,

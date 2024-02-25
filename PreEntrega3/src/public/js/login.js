@@ -24,7 +24,7 @@ form.addEventListener("submit", (e) => {
                     console.log("Cookies generadas:");
                     console.log(document.cookie);
                      alert("Usuario conectado");
-                     window.location.replace("/api/products");
+                     window.location.replace("/users/products");
                 })
     
       }

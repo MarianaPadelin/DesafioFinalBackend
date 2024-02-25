@@ -167,6 +167,12 @@ class CartDao {
     }
   }
 
+  async getTotal() {
+    //product*quantity
+    //reduce
+    //guardarlo en el modelo de cart
+  }
+
   errorMessage(error) {
     console.log(error);
     return error

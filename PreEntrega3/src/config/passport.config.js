@@ -3,23 +3,20 @@ import passportLocal from "passport-local";
 import { createHash, validatePass, PRIVATE_KEY } from "../dirname.js";
 import { userModel } from "../Services/Models/user.model.js";
 import jwtStrategy from "passport-jwt";
-import GitHubStrategy from "passport-github2"
+import GitHubStrategy from "passport-github2";
 import config from "./config.js";
 import cartDao from "../Services/DAOS/mongoDB/cart.dao.js";
 
 
-//Declaramos la estrategia (qué tipo de passport voy a usar)
-//crear carrito en estrategia github
 
+//Declaramos la estrategia (qué tipo de passport voy a usar)
 const localStrategy = passportLocal.Strategy;
 
 //Declaramos estrategias de jwt
-
 const JwtStrategy = jwtStrategy.Strategy;
 const ExtractJWT = jwtStrategy.ExtractJwt;
 
 //inicializamos passport
-
 const inicializePassport = () => {
   //Estrategia de obtener Token JWT por Cookie:
   passport.use(
@@ -42,7 +39,6 @@ const inicializePassport = () => {
     )
   );
 
-
   //estrategia con github:
 
   passport.use(
@@ -63,19 +59,41 @@ const inicializePassport = () => {
           });
           if (!userExists) {
             console.log(
-              "este usuario no se registrado con github" + profile._json.email
+              "Este usuario no se ha registrado con github. Se creará una nueva cuenta" + profile._json.email
             );
             //el usuario no existe, entonces lo registro
 
+            let cart = {};
+
+            const newCart = await cartDao.createCart(cart);
+
+            if (profile._json.email === config.adminMail) {
+              let newUser = {
+                first_name: profile._json.name,
+                last_name: profile._json.last_name || ".",
+                age: profile._json.age || 100,
+                email: profile._json.email,
+                password: "",
+                rol: "admin",
+                cart: newCart,
+                loggedBy: "github",
+              };
+              console.log("llego al log de admin")
+              const result = await userModel.create(newUser);
+              return done(null, result);
+            }
+
             let newUser = {
               first_name: profile._json.name,
-              // last_name: profile._json.name,
-              // age: profile._json.name,
+              last_name: profile._json.last_name || ".",
+              age: profile._json.age || 100,
               email: profile._json.email,
               password: "",
+              cart: newCart,
               loggedBy: "github",
-            
             };
+
+            console.log("llego al log de user")
             const result = await userModel.create(newUser);
             return done(null, result);
           } else {
@@ -108,11 +126,29 @@ const inicializePassport = () => {
             done(null, false);
           }
 
-          //acá va el método crear carrito, sacar su id y meterlo dentro del objeto de user que está a continuación
+          
           let cart = {};
 
           const newCart = await cartDao.createCart(cart);
-          console.log(newCart._id);
+
+        
+          //valido registro como admin:
+          if (email === config.adminMail) {
+            const user = {
+              first_name,
+              last_name,
+              age,
+              email,
+              password: createHash(password),
+              rol: "admin",
+              cart: newCart,
+              loggedBy: "passportLocal",
+            };
+            console.log("llego al log admin")
+
+            const result = await userModel.create(user);
+            return done(null, result);
+          }
 
           const user = {
             first_name,
@@ -121,18 +157,18 @@ const inicializePassport = () => {
             email,
             password: createHash(password),
             cart: newCart,
+            loggedBy: "passportLocal",
           };
-
+          console.log("no llega al admin")
           const result = await userModel.create(user);
           return done(null, result);
         } catch (error) {
-          console.log(error)
+          console.log(error);
           return done("Error de register" + error);
         }
       }
     )
   );
-
 
   //funciones de serialización propias de passport:
 
@@ -150,11 +186,10 @@ const inicializePassport = () => {
   });
 };
 
-
 const cookieExtractor = (req) => {
   let token = null;
   console.log("Entrando a Cookie Extractor");
-  console.log(req.cookies)
+  console.log(req.cookies);
   //no lee esto
   if (req && req.cookies) {
     //Validamos que exista el request y las cookies.
@@ -163,8 +198,9 @@ const cookieExtractor = (req) => {
     token = req.cookies["jwtCookieToken"];
     console.log("Token obtenido desde Cookie:");
     console.log(token);
+    return token;
   }
-  console.log("no se encontraron cookies")
+  console.log("no se encontraron cookies");
   return token;
 };
 

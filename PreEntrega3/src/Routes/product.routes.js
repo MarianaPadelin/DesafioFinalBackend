@@ -9,7 +9,7 @@ router.get(
   "/",
 
   passportCall("jwt"),
-  authorization("user"),
+  authorization('admin'),
   getProducts
 );
 

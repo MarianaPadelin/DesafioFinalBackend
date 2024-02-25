@@ -25,11 +25,11 @@ export const validatePass = (user, hashPass) => {
 
 //JWT
 
-//esto ponerlo en .env:
+
 export const PRIVATE_KEY = config.privateKey
 
 export const generateJWToken = (user) => {
-  return jwt.sign({ user }, PRIVATE_KEY, { expiresIn: "240s" });
+  return jwt.sign({ user }, PRIVATE_KEY, { expiresIn: "300s" });
 
 };
 

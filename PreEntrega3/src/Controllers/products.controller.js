@@ -17,6 +17,7 @@ export const getProducts = async (req, res) => {
     res.status(200).render("products", {
       user: req.user.name,
       role: req.user.role,
+      cart: req.user.cart,
       products,
       fileCss: "index.css",
     });

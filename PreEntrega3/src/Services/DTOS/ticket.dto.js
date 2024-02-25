@@ -13,11 +13,11 @@
 import { Schema, model } from "mongoose";
 
 const ticketSchema = new Schema({
-
   cart: [
     {
       _id: { type: Schema.Types.ObjectId, ref: "cart" },
-      quantity: { ype: Schema.Types.ObjectId, ref: "cart" },
+      quantity: { type: Schema.Types.ObjectId, ref: "cart" },
+      total: { type: Schema.Types.ObjectId, ref: "cart" },
     },
   ],
   products: [
@@ -28,13 +28,11 @@ const ticketSchema = new Schema({
     },
   ],
   totalPrice: Number, //función reduce
-  purchaser:
-    {
-      first_name: { type: String, ref: "users" },
-      last_name: { type: String, ref: "users" },
-      email: { type: String, ref: "users" },
-    },
-  
+  purchaser: {
+    first_name: { type: String, ref: "users" },
+    last_name: { type: String, ref: "users" },
+    email: { type: String, ref: "users" },
+  },
 });
 
 const ticketModel = model("ticket", ticketSchema)

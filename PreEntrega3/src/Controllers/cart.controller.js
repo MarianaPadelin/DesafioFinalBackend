@@ -63,6 +63,7 @@ export const addProductToCart = async (req, res) => {
   try {
     const { id } = req.params;
     const { pid } = req.params;
+    console.log(id + pid)
 
     const cart = await validateCart(id).then(addProduct(id, pid));
 

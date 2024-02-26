@@ -26,4 +26,6 @@ export default {
   clientSecret: process.env.clientSecret,
   callbackURL: process.env.callbackURL,
   persistence: persistence,
+  emailAcount: process.env.cuentadegmail,
+  appPassword: process.env.APP_PASSWORD,
 };

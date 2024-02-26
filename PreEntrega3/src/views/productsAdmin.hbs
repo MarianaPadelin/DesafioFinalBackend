@@ -1,12 +1,11 @@
 <div>
-  <h3>Bienvenido {{user}}</h3>
+
+  <h3>Página de administración de productos {{user}}</h3>
 
   <p><b>Rol:</b> {{role}}</p>
-  <p>cart id: <span id="cartId">{{cart}}</span></p>
-  <a href="/users"> <button> Ir al perfil del usuario </button></a>
 
   <button id="botonLogout" type="submit">LOGOUT</button>
-  <a href="/api/carts/{{cart}}"><button>Ir al carrito</button></a>
+
 </div>
 
 <div>
@@ -36,21 +35,27 @@
           <td>{{this.category}}</td>
           <td>{{this.stock}}</td>
           <td>{{this.thumbnails}}</td>
-          <td><form action="/api/carts/{{cart}}/product/{{this.id}}" method="post">
+      
+          <td><button id="editarItem" type="button" class="btn btn-secondary"><i
+                class="bi bi-pencil-square"
+              ></i></button></td>
 
-<button   id="agregarItem" type="submit" class="bi bi-cart-plus">Add to cart</button>
-
-</form></td>
-
-          {{!-- <td><button
-                id="agregarItem"
-                type="button"
-                class="btn btn-secondary"
-              ><i class="bi bi-cart-plus"></i></button>{{this.id}}</td> --}}
+          <td><button id="borrarItem" type="button" class="btn btn-secondary"><i
+                class="bi bi-file-earmark-x"
+              ></i></button></td>
         </tr>
       {{/each}}
     </tbody>
+
   </table>
+
+  <div>Añadir producto:
+    <a href="/api/products/addProduct"><button
+        type="button"
+        class="btn btn-secondary"
+      ><i class="bi bi-file-earmark-plus-fill"></i></button></a>
+  </div>
+
   <br />
 
   <div class="position-relative m-4">
@@ -79,15 +84,10 @@
     </p>
   </div>
 
-  <a href="/chat"><button> Ir al chat </button></a>
-  <a href="/"><button>Ir a home</button></a>
-
-  <script src="/socket.io/socket.io.js"></script>
-
 </div>
 
 <link
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
 />
-<script src="/js/profile.js"></script>
+<script src="/js/admin.js"></script>

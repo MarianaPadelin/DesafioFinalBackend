@@ -15,6 +15,7 @@ import usersViewsRouter from "./Routes/user.views.routes.js";
 import githubViewRouter from "./Routes/github.views.routes.js";
 import cartRouter from "./Routes/cart.routes.js";
 import jwtRouter from "./Routes/jwt.routes.js";
+import ticketRouter from "./Routes/ticket.routes.js"
 
 import { Server } from "socket.io";
 import messagesDao from "./Services/DAOS/messages.dao.js";
@@ -120,3 +121,4 @@ app.use("/", viewRouter);
 app.use("/users", usersViewsRouter);
 app.use("/github", githubViewRouter);
 app.use("/api/jwt", jwtRouter);
+app.use("/ticket", ticketRouter)

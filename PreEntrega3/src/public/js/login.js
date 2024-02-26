@@ -1,3 +1,5 @@
+// import config from "../../config/config.js";
+
 const form = document.getElementById("loginForm");
 
 form.addEventListener("submit", (e) => {
@@ -8,7 +10,7 @@ form.addEventListener("submit", (e) => {
 
   data.forEach((value, key) => (obj[key] = value));
 
-  //esto es lo que hice en postman
+
   fetch("/api/jwt/login", {
     method: "POST",
     body: JSON.stringify(obj),
@@ -20,16 +22,29 @@ form.addEventListener("submit", (e) => {
       if (result.status === 200) {
         result.json()
                 .then(json => {
-
+                    console.log("Data: " + data)
                     console.log("Cookies generadas:");
                     console.log(document.cookie);
                      alert("Usuario conectado");
-                     window.location.replace("/users/products");
+                   
+                    return window.location.replace("/users/products");
                 })
     
       }
+      else if (result.status === 201) {
+     
+                    console.log("Data: " + data)
+                    console.log("Cookies generadas:");
+                    console.log(document.cookie);
+                     alert("Usuario conectado");
+                    
+                     return window.location.replace("/api/products");
+                     
+                    
+             
+      }
       else {
-        alert("Credenciales incorrectas")
+        alert("Credenciales incorrectas");
       }
     
     })

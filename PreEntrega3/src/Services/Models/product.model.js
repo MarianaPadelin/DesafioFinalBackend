@@ -9,7 +9,7 @@ const productSchema = new Schema({
   status: { type: Boolean, default: true },
   category: { type: String, required: true },
   stock: { type: Number, required: true },
-  thumbnails: { type: String, required: true },
+  thumbnails: { type: String },
 });
 
 

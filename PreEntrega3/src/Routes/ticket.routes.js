@@ -1,11 +1,17 @@
 import { Router } from "express"
-import { getTickets, getTicketById, generateTicket } from "../Controllers/ticket.controller.js"
+import {
+  getAllTickets,
+  getTicketById,
+  sendEmail
+
+} from "../Controllers/ticket.controller.js";
 
 const router = Router()
 
 
-router.get("/", getTickets)
+router.get("/", getAllTickets);
 router.get("/:id", getTicketById)
-router.post("/", generateTicket)
+router.get("/send/email", sendEmail)
+// router.post("/", createTicket);
 
 export default router; 

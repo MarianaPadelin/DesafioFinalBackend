@@ -55,8 +55,10 @@ export const logUser = async (req, res) => {
         httpOnly: true, //No se expone la cookie
       });
     
-
-    res.send({ message: "Login successful" });
+      if (userExists.email === config.adminMail){
+        return res.status(201).send({ message: "Login admin successful" });
+      }
+    res.status(200).send({ message: "Login user successful" });
   } catch (error) {
     console.log(error);
     return res.status(500).send({

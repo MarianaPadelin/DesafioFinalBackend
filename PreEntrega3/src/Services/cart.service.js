@@ -49,3 +49,13 @@ export const deleteOneProduct = async (cid, pid) => {
 
   return { status: 200, message: `Product ${pid} deleted from cart ${cid}` };
 };
+
+
+export const getTotal = async (cart) => {
+
+  const total = await cart.products.reduce((acc, elemento) => {
+    return acc + elemento.quantity * elemento._id.price;
+  }, 0);
+
+  return total;
+}

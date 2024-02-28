@@ -1,5 +1,6 @@
 //en vez de esto tengo que importar el repository
 
+import { sendEmail } from "../dirname.js";
 import {
   addProduct,
   createCart,
@@ -11,7 +12,7 @@ import {
 } from "../Services/cart.service.js";
 import CartDao from "../Services/DAOS/mongoDB/cart.dao.js";
 import TicketRepository from "../Services/Repository/ticket.repository.js"
-import { sendEmail } from "./ticket.controller.js";
+
 
 //aca importaria la factory de cart
 
@@ -150,7 +151,7 @@ export const finalizarCompra = async (req, res) => {
       
       const result = await TicketRepository.save(ticket);
       // console.log(result)
-      sendEmail(result._id)
+      sendEmail(result.id, req.user.email)
 
       
       //para aplicar el populate del carrito uso la función getById

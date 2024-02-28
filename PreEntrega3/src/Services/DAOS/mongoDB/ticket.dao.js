@@ -5,7 +5,7 @@ class TicketDao {
   async getAll() {
     return await ticketModel.find();
   }
-
+//verificar el populate del cart
   async findOneTicket(_id) {
     try {
       if (mongoose.Types.ObjectId.isValid(_id)) {

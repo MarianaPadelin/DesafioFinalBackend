@@ -32,7 +32,7 @@ form.addEventListener("submit", (e) => {
     
       }
       else if (result.status === 201) {
-     
+
                     console.log("Data: " + data)
                     console.log("Cookies generadas:");
                     console.log(document.cookie);

@@ -36,17 +36,10 @@
           <td>{{this.category}}</td>
           <td>{{this.stock}}</td>
           <td>{{this.thumbnails}}</td>
-          <td><form action="/api/carts/65df92512165daf5e027c47c/product/{{this.id}}" method="post">
-
-<button   id="agregarItem" type="submit" class="bi bi-cart-plus">Add to cart</button>
-
-</form></td>
-
-          {{!-- <td><button
-                id="agregarItem"
-                type="button"
-                class="btn btn-secondary"
-              ><i class="bi bi-cart-plus"></i></button>{{this.id}}</td> --}}
+          <td><form action="/api/carts/{{../cart}}/product/{{this.id}}" method="post">
+            <button   id="agregarItem" type="submit" class="bi bi-cart-plus">Add to cart</button>
+          </form></td>
+    
         </tr>
       {{/each}}
     </tbody>

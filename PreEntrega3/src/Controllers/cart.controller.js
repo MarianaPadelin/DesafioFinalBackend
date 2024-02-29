@@ -1,15 +1,16 @@
 //en vez de esto tengo que importar el repository
 
 import { sendEmail } from "../dirname.js";
-import {
-  addProduct,
-  createCart,
-  putOneProduct,
-  validateCart,
-  eraseCart,
-  deleteOneProduct,
-  getTotal,
-} from "../Services/cart.service.js";
+// import {
+//   addProduct,
+//   createCart,
+//   putOneProduct,
+//   validateCart,
+//   eraseCart,
+//   deleteOneProduct,
+//   getTotal,
+// } from "../Services/cart.service.js";
+import CartRepository from "../Services/Repository/cart.repository.js";
 import CartDao from "../Services/DAOS/mongoDB/cart.dao.js";
 import TicketRepository from "../Services/Repository/ticket.repository.js"
 
@@ -18,8 +19,7 @@ import TicketRepository from "../Services/Repository/ticket.repository.js"
 
 export const getCarts = async (req, res) => {
   try {
-    //const carts = await cartService();.
-    const carts = await CartDao.findCart();
+    const carts = await CartRepository.getAll();
 
     res.json({
       message: "These are the carts:",
@@ -30,24 +30,30 @@ export const getCarts = async (req, res) => {
   }
 };
 
+
+
 export const getOneCart = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const cart = await validateCart(id);
+    const cart = await CartRepository.getById(id);
 
-    let totalPrice = await getTotal(cart)
+    let totalPrice = await CartRepository.getTotal(cart)
+
+    let products = cart.products
 
     res.render("cartView", {
       cart: id,
       message: `This is the cart with id ${id}:`,
-      products: cart.products,
+      products,
       amount: totalPrice,
+
     });
   } catch (error) {
+    console.log(error)
     res.send({
       message: "Cart not found",
-      error,
+      error: error,
     });
     //    CartDao.errorMessage(error);
   }
@@ -55,13 +61,17 @@ export const getOneCart = async (req, res) => {
 
 export const postCart = async (req, res) => {
   try {
-    const cart = await createCart();
+    const cart = await CartRepository.save();
     res.send({
       data: cart,
     });
     // return cart;
   } catch (error) {
-    CartDao.errorMessage(error);
+    console.log(error)
+    res.send({
+      message: "Couldn't create cart",
+      error: error,
+    })
   }
 };
 
@@ -71,14 +81,18 @@ export const addProductToCart = async (req, res) => {
     const { pid } = req.params;
     console.log(id + pid);
 
-    const cart = await validateCart(id).then(addProduct(id, pid));
+    const cart = await CartRepository.getById(id).then(CartRepository.addProduct(id, pid));
 
     res.status(200).json({
       message: `Product ${pid} added to cart ${id}`,
       cart,
     });
   } catch (error) {
-    CartDao.errorMessage(error);
+       console.log(error);
+       res.send({
+         message: "Couldn't create cart",
+         error: error,
+       });
   }
 };
 
@@ -88,30 +102,36 @@ export const changeProductQuantity = async (req, res) => {
   const { quantity } = req.body;
 
   try {
-    const cart = await validateCart(cid).then(
-      putOneProduct(cid, pid, quantity)
+    const cart = await CartRepository.getById(cid).then(
+      CartRepository.updateProduct(cid, pid, quantity)
     );
 
     res.json({
       cart,
     });
   } catch (e) {
-    res.json({
-      error: e,
-    });
+      console.log(error);
+      res.send({
+        message: "Couldn't update cart",
+        error: error,
+      });
   }
 };
 
 export const deleteCart = async (req, res) => {
   const { cid } = req.params;
   try {
-    const cart = await validateCart(cid).then(eraseCart(cid));
-    //no me manda el mensaje de service, lo manda del dao
+    const cart = await CartRepository.getById(cid).then(CartRepository.delete(cid));
+
     res.json({
       cart,
     });
   } catch (error) {
-    CartDao.errorMessage(error);
+      console.log(error);
+      res.send({
+        message: `Couldn't delete cart ${cid}`,
+        error: error,
+      });
   }
 };
 
@@ -120,14 +140,16 @@ export const deleteProductFromCart = async (req, res) => {
   const { pid } = req.params;
 
   try {
-    const cart = await validateCart(cid).then(deleteOneProduct(cid, pid));
+    const cart = await CartRepository.getById(cid).then(CartRepository.deleteProduct(cid, pid));
 
     res.json({
       data: cart,
     });
   } catch (e) {
-    res.json({
-      error: e,
+    console.log(error);
+    res.send({
+      message: `Couldn't delete product ${pid} from cart ${cid}`,
+      error: error,
     });
   }
 };
@@ -137,9 +159,9 @@ export const finalizarCompra = async (req, res) => {
   const { cid } = req.params
 
     try{ 
-      const cart = await validateCart(cid)
+      const cart = await CartRepository.getById(cid)
 
-      const amount = await getTotal(cart)
+      const amount = await CartRepository.getTotal(cart)
 
       const purchase_datetime = new Date();
       const ticket = {
@@ -164,8 +186,8 @@ export const finalizarCompra = async (req, res) => {
     } catch (error) {
     console.log(error);
     return res.status(500).send({
-      messsage: "error",
-      error: "Error al crear el ticket.",
-    })
+      messsage: "Error creating ticket",
+      error: error,
+    });
   }
 }

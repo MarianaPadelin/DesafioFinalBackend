@@ -1,11 +1,8 @@
 import { validatePass, generateJWToken } from "../dirname.js";
 import { userModel } from "../Services/Models/user.model.js";
 import config from "../config/config.js";
-// import { loginUser } from "../Services/jwt.service.js";
 
 
-
-//cambiar las rutas de usuario de api/product a user/products
 
 
 export const register = async(req, res) => {
@@ -20,7 +17,7 @@ export const logUser = async (req, res) => {
   const { email, password } = req.body;
   try {
     const userExists = await userModel.findOne({ email: email });
-    // const userExists = await loginUser(email, password);
+
     if (!userExists) {
       console.warn(`User doesn't exist: ${email}`);
       return res.status(204).send({
@@ -94,8 +91,6 @@ export const githubcallback = async (req, res) => {
     });
     return res.redirect("/api/products");
   
-
-
 };
 
 

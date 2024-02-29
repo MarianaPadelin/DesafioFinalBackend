@@ -1,5 +1,3 @@
-// falta formulario de editarItem
-
 const botonLogout = document.getElementById("botonLogout");
 
 botonLogout.addEventListener("click", (e) => {
@@ -24,10 +22,10 @@ botonLogout.addEventListener("click", (e) => {
     });
 });
 
-const botonEliminar = document.getElementById("borrarItem");
+const botonBorrar = document.getElementById("borrarItem");
 const pid = document.getElementById("productId").innerHTML;
 
-botonEliminar.addEventListener("click", (e) => {
+botonBorrar.addEventListener("click", (e) => {
   e.preventDefault();
 
   fetch(`/api/products/${pid}`, {
@@ -38,15 +36,16 @@ botonEliminar.addEventListener("click", (e) => {
   })
     .then((result) => {
       if (result.status === 200) {
-        return alert("Se ha eliminado el producto");
-      } else {
-        return alert("Producto no encontrado");
+        return alert(`Se eliminó el producto ${pid} `);
       }
+      return alert("Error al eliminar el producto");
     })
-    .then(() => {
+     .then(() => {
       window.location.replace("/api/products");
     })
     .catch((error) => {
       console.log(error);
     });
 });
+
+

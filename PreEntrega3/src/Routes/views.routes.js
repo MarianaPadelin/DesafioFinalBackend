@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { getChat, home } from "../Controllers/general.views.controller.js";
-import { getProducts } from "../Controllers/generalProducts.controller.js";
 import { passportCall, authorization } from "../dirname.js";
+import { getProducts } from "../Controllers/products.controller.js";
 
 const router = Router();
 

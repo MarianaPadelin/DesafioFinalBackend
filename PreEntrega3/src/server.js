@@ -64,16 +64,16 @@ app.use(express.urlencoded({ extended: true }));
 
 //mongoose
 
-const MONGO_URL = config.mongoUrl;
+// const MONGO_URL = config.mongoUrl;
 
-mongoose
-  .connect(MONGO_URL)
-  .then(() => {
-    console.log("-------- DB connected -------");
-  })
-  .catch((err) => {
-    console.log("Hubo un error de conexión a la DB" + err);
-  });
+// mongoose
+//   .connect(MONGO_URL)
+//   .then(() => {
+//     console.log("-------- DB connected -------");
+//   })
+//   .catch((err) => {
+//     console.log("Hubo un error de conexión a la DB" + err);
+//   });
 
 //Motor de handlebars
 app.engine(
@@ -94,7 +94,7 @@ app.use(express.static(`${__dirname}/public`));
 app.use(
   session({
     store: MongoStore.create({
-      mongoUrl: MONGO_URL,
+      mongoUrl: config.mongoUrl,
       mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
       ttl: 10 * 60,
     }),

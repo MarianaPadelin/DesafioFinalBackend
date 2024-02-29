@@ -1,21 +1,30 @@
-export default class ProductsRepository {
+import productDao from "../DAOS/mongoDB/product.dao.js";
+
+
+class ProductsRepository {
   constructor(dao) {
     this.dao = dao;
   }
   getAll = () => {
-    return this.dao.getAllProducts();
+    return productDao.getAllProducts();
   };
   getById = (id) => {
-    return this.dao.getProductById(id)
+    return productDao.getProductById(id);
+  };
+  filter = (limit, page, category, stock) => {
+    return productDao.filterProducts(limit, page, category, stock);
   };
   save = (product) => {
-    return this.dao.addProduct(student);
+
+    return productDao.addProduct(product);
   };
   update = (id, product) => {
-    return this.dao.modifyProduct(id, product);
+    return productDao.modifyProduct(id, product);
   };
-  delete = (id, product) => {
-    return this.dao.deleteProduct(id, product)
+  delete = (id) => {
+    return productDao.deleteProduct(id);
   };
-
 }
+
+
+export default new ProductsRepository();

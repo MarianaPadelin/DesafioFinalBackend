@@ -22,41 +22,16 @@ botonLogout.addEventListener("click", (e) => {
     });
 });
 
-const botonAñadirItem = document.getElementById("agregarItem");
-
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const data = new FormData(form);
-  const obj = {};
-  data.forEach((value, key) => (obj[key] = value));
-  cid = req.user.cart;
-
-  console.log(cid);
-  fetch(`/api/carts/${cid}/product/${pid}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-    .then((result) => {
-      if (result.status === 200) {
-        return alert("Se añadió el producto al carrito");
-      }
-      return alert("Error al agregar el producto");
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-});
-
 // const botonAñadirItem = document.getElementById("agregarItem");
-// const pid = document.getElementById("productId").innerHTML;
-// const cid = document.getElementById("cartId").innerHTML;
 
-// botonAñadirItem.addEventListener("click", (e) => {
+// form.addEventListener("submit", (e) => {
 //   e.preventDefault();
-//   console.log(pid)
+//   const data = new FormData(form);
+//   const obj = {};
+//   data.forEach((value, key) => (obj[key] = value));
+//   cid = req.user.cart;
 
+//   console.log(cid);
 //   fetch(`/api/carts/${cid}/product/${pid}`, {
 //     method: "POST",
 //     headers: {
@@ -69,10 +44,8 @@ form.addEventListener("submit", (e) => {
 //       }
 //       return alert("Error al agregar el producto");
 //     })
-//     // .then(() => {
-//     //   window.location.replace(`/api/carts/${id}`);
-//     // })
 //     .catch((error) => {
 //       console.log(error);
 //     });
 // });
+

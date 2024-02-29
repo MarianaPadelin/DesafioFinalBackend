@@ -1,14 +1,14 @@
 //acá tendría que establecer la conexión con la db, en vez de en server.js
+import MongoSingleton from "../config/mongodb.singleton.js";
 
 import config from "../config/config.js";
 
 let productService;
 let cartService;
-let userService;
+let ticketService;
 
-//para inicializar la db de mongo (acá usa singleton)
 async function initializeMongoService() {
-  console.log("Iniciando Servicio para Mongo!!");
+  console.log("Iniciando Servicio para MongoDB");
   try {
     await MongoSingleton.getInstance();
   } catch (error) {
@@ -16,7 +16,6 @@ async function initializeMongoService() {
     process.exit(1); // Salir con código de error
   }
 }
-
 switch (config.persistence) {
   case mongoDB:
     initializeMongoService();
@@ -27,8 +26,19 @@ switch (config.persistence) {
     console.log("Servicio de productos cargado:");
     console.log(productService);
 
-    //usuarios no tiene dao
+     const { default: CartServiceMongo } = await import(
+       "./DAOS/mongoDB/cart.dao.js"
+     );
+    cartService = new cartDao();
+    console.log(cartService)
 
+    const { default: TicketServiceMongo } = await import(
+      "./DAOS/mongoDB/ticket.dao.js"
+    );
+    ticketService = new ticketDao();
+    console.log(ticketService);
+
+  
     break;
 
   case FileSystem:
@@ -47,7 +57,7 @@ switch (config.persistence) {
       config.persistence
     );
     process.exit(1); // Salir con código de error
-    break;
+
 }
 
-export { productService, cartService, userService };
+export { productService, cartService, ticketService };

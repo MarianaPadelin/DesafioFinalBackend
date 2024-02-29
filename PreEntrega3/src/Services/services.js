@@ -6,6 +6,7 @@ import CartRepository from "./Repository/cart.repository.js";
 import ProductsRepository from "./Repository/products.repository.js";
 import TicketRepository from "./Repository/ticket.repository.js";
 
+//con esto cambiar de productDao a this.dao
 // Generamos las instancias de las clases
 const productDao = new ProductDao()
 const cartDao = new CartDao()

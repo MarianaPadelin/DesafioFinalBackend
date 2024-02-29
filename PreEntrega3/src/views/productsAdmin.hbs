@@ -36,11 +36,13 @@
           <td>{{this.stock}}</td>
           <td>{{this.thumbnails}}</td>
       
-          <td><button id="editarItem" type="button" class="btn btn-secondary"><i
+          <td>
+            <a href="/api/products/editProduct/{{this.id}}"><button id="editarItem" type="button" class="btn btn-secondary"><i
                 class="bi bi-pencil-square"
-              ></i></button></td>
+              ></i></button></a></td>
 
-          <td><button id="borrarItem" type="button" class="btn btn-secondary"><i
+          <td>
+            <button id="borrarItem" type="button" class="btn btn-secondary"><i
                 class="bi bi-file-earmark-x"
               ></i></button></td>
         </tr>

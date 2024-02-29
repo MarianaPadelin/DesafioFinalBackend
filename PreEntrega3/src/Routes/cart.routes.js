@@ -4,7 +4,7 @@ import { passportCall, authorization } from "../dirname.js";
 const router = Router();
 
 router.get("/", getCarts);
-//autorizar esta ruta
+
 router.get("/:id", passportCall("jwt"), authorization("user"), getOneCart);
 
 router.post("/", postCart);

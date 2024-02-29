@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { passportCall, authorization, authToken } from "../dirname.js";
 import { getUsers, registerUser } from "../Controllers/user.views.controller.js"
-import { getProducts } from "../Controllers/products.controller.js";
+import { getUserProducts } from "../Controllers/products.controller.js";
 const router = Router();
 
 // Vista del formulario de registro
@@ -20,7 +20,7 @@ router.get(
   "/products",
   passportCall("jwt"),
   authorization("user"),
-  getProducts
+  getUserProducts
 );
 
 

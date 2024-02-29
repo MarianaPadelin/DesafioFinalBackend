@@ -1,29 +1,37 @@
-export default class CartRepository {
+import cartDao from "../DAOS/mongoDB/cart.dao.js";
+//ver si usando factory puedo cambiar cartDao por this.dao.
+class CartRepository {
   constructor(dao) {
     this.dao = dao;
   }
-  getAll = () => {
-    return this.dao.findCart();
+  getAll = async () => {
+    return await cartDao.findCart();
   };
-  getById = (id) => {
-    return this.dao.findCartById(id)
+  getById = (cid) => { 
+    return cartDao.findCartById(cid);
   };
   save = (cart) => {
-    return this.dao.createCart(cart)
+    return cartDao.createCart(cart);
   };
-  addProduct = (id, pid) => {
-    return this.dao.addProductToCart(id, pid)
+  addProduct = (cid, pid) => {
+    return cartDao.addProductToCart(cid, pid);
   };
-  update = (id, cart) => {
-    return this.dao.updateCart(id, cart)
+  update = (cid, cart) => {
+    return cartDao.updateCart(cid, cart);
   };
-  updateProduct = (id, pid, quantity) => {
-    return this.dao.updateOneProduct(id, pid, quantity)
+  updateProduct = (cid, pid, quantity) => {
+    return cartDao.updateOneProduct(cid, pid, quantity);
   };
-  delete = (id, cart) => {
-    return this.dao.deleteCart(id, cart)
+  delete = (cid) => {
+    return cartDao.deleteCart(cid);
   };
-  deleteProduct = (id, pid) =>{
-    return this.dao.deleteOneProduce(id, pid)
+  deleteProduct = (cid, pid) =>{
+    return cartDao.deleteOneProduct(cid, pid);
+  };
+  getTotal = (cart) => {
+    return cartDao.getTotal(cart);
   }
 }
+
+
+export default new CartRepository();

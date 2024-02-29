@@ -1,7 +1,6 @@
 import { cartModel } from "../../Models/cart.model.js";
 import mongoose from "mongoose";
 
-//borrar las validaciones de si existe el carrito
 class CartDao {
   async findCart() {
     return await cartModel.find();
@@ -9,8 +8,10 @@ class CartDao {
 
   async findCartById(_id) {
     try {
+      console.log(_id)
       if (mongoose.Types.ObjectId.isValid(_id)) {
-        return await cartModel.findById(_id).populate("products._id");
+        let result = await cartModel.findById(_id).populate("products._id");
+        return result
       }
       return { error: "Id format not valid" };
     } catch (error) {
@@ -20,12 +21,11 @@ class CartDao {
 
   async createCart(cart) {
     try {
-
-      const newCart = await cartModel.create(cart)
+      const newCart = await cartModel.create(cart);
 
       // console.log("carrito creado " + newCart)
 
-      return newCart 
+      return newCart;
     } catch (error) {
       console.log(error);
     }
@@ -167,13 +167,15 @@ class CartDao {
     }
   }
 
+  async getTotal(cart) {
+    const cartFound = await this.findCartById(cart._id)
 
+    const total = await cartFound.products.reduce((acc, elemento) => {  
+      return acc + elemento.quantity * elemento._id.price;
+    }, 0);
 
-  errorMessage(error) {
-    console.log(error);
-    return error
+    return total;
   }
 }
-
 
 export default new CartDao();

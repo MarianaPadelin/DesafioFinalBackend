@@ -2,19 +2,6 @@ import { productModel } from "../../Models/product.model.js";
 import mongoose from "mongoose";
 
 class ProductDao {
-  async addProduct(nuevoProducto) {
-    try {
-      if (nuevoProducto) {
-        return await productModel.create(nuevoProducto);
-      }
-
-      console.log("Hay campos incompletos");
-      return false;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
   async getAllProducts() {
     try {
       return await productModel.find();
@@ -39,17 +26,32 @@ class ProductDao {
     }
   }
 
-  async deleteProduct(_id) {
-    try {
-      if (mongoose.Types.ObjectId.isValid(_id)) {
-        const productFound = await productModel.findById({ _id });
-
-        if (productFound) {
-          return await productModel.findByIdAndDelete({ _id });
-        }
-        return "Product not found";
+  async filterProducts(limit, page, category, stock) {
+      let filter = {};
+      if (category) {
+        filter.category = category;
       }
-      console.log("Formato de id no válido");
+      if (stock) {
+        filter.stock = stock;
+      }
+  
+      const products = await productModel.paginate(filter, {
+        page: page || 1,
+        limit: limit || 10,
+        sort: { price: 1 },
+      });
+
+      return products;
+  }
+
+  async addProduct(nuevoProducto) {
+    try {
+      if (nuevoProducto) {
+        return await productModel.create(nuevoProducto);
+      }
+
+      console.log("Hay campos incompletos");
+      return false;
     } catch (error) {
       console.log(error);
     }
@@ -57,6 +59,7 @@ class ProductDao {
 
   async modifyProduct(_id, newProduct) {
     try {
+      console.log(_id, newProduct)
       if (mongoose.Types.ObjectId.isValid(_id)) {
         const productFound = await productModel.findById({ _id });
 
@@ -71,12 +74,20 @@ class ProductDao {
     }
   }
 
-  errorMessage(error) {
-    console.log(error);
-    res.status(404).json({
-      error,
-      message: "Error",
-    });
+  async deleteProduct(_id) {
+    try {
+      if (mongoose.Types.ObjectId.isValid(_id)) {
+        const productFound = await productModel.findById({ _id });
+
+        if (productFound) {
+          return await productModel.findByIdAndDelete({ _id });
+        }
+        return "Product not found";
+      }
+      console.log("Formato de id no válido");
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 

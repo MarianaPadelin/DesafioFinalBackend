@@ -5,13 +5,9 @@ import {
   postProduct,
   changeProduct,
   deleteProduct,
-  getProductForm,
 } from "../Controllers/products.controller.js";
-
+import { getEditForm, getProductForm } from "../Controllers/admin.views.controller.js";
 import { passportCall, authorization } from "../dirname.js";
-
-//falta agregar passportcall y authorization a post, update y delete
-//Falta logout de admin
 
 
 const router = Router();
@@ -29,6 +25,13 @@ router.get(
   passportCall("jwt"),
   authorization("admin"),
   getProductForm
+);
+
+router.get(
+  "/editProduct/:id",
+  passportCall("jwt"),
+  authorization("admin"),
+  getEditForm
 );
 
 router.get("/:id", getOneProduct);

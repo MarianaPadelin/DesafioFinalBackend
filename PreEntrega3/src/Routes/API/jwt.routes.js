@@ -6,11 +6,9 @@ import {
   logUser,
   logout,
   register,
-} from "../Controllers/jwt.controller.js";
+} from "../../Controllers/API/jwt.controller.js";
 
 const router = Router();
-
-//validar admin mail desde register en vez de login
 
 router.post("/login", logUser);
 

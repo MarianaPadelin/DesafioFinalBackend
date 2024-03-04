@@ -1,6 +1,5 @@
 import productDao from "../DAOS/mongoDB/product.dao.js";
 
-
 class ProductsRepository {
   constructor(dao) {
     this.dao = dao;
@@ -15,7 +14,6 @@ class ProductsRepository {
     return productDao.filterProducts(limit, page, category, stock);
   };
   save = (product) => {
-
     return productDao.addProduct(product);
   };
   update = (id, product) => {

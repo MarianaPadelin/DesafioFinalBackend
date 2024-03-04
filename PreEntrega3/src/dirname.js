@@ -28,7 +28,6 @@ export const validatePass = (user, hashPass) => {
 
 //JWT
 
-
 export const PRIVATE_KEY = config.privateKey
 
 export const generateJWToken = (user) => {
@@ -36,7 +35,7 @@ export const generateJWToken = (user) => {
 
 };
 
-//middleware para el manejo de errores
+
 
 export const passportCall = (strategy) => {
   return async (req, res, next) => {
@@ -82,24 +81,22 @@ export const authToken = (req, res, next) => {
 
 
 
+
 //autorizamos quien puede ver las paginas segun el rol
 export const authorization = (role) => {
     return async (req, res, next) => {
         if (!req.user) return res.status(401).send("Unauthorized: User not found in JWT")
-
-        if (req.user.role !== role) {
-            return res.status(403).send("Forbidden: El usuario no tiene permisos con este rol.");
+        if (req.user.role.includes(role)){
+          console.log("el rol es"  + req.user.role);
+          return next()
         }
-        next()
+
+        // console.log(req.user.role)
+        return res.status(403).send("Forbidden: El usuario no tiene permisos con este rol.");
     }
 };
 
-
-
-
 //NODEMAILER:
-
-
 // configuracion de transport
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -131,7 +128,6 @@ export const sendEmail = async (id, email) => {
     
     let result = transporter.sendMail({
       from: "Coder Backend PreEntrega - " + config.emailAcount,
-      // to: "marianapadelin@gmail.com",
       to: email,
       subject: "Comprobante Ticket de compra",
       html: `<div><h1> Ticket generado: ${data} </h1></div>`,
@@ -146,7 +142,7 @@ export const sendEmail = async (id, email) => {
 };
 
 
-
+//Más adelante adjuntar el ticket además de mandarlo en el cuerpo
 // const mailOptionsWithAttachments = {
 //     from: "Coder Test - " + config.gmailAccount,
 //     to: `${config.gmailAccount};enzozanino2000@gmail.com; leo1987@yopmail.com`,

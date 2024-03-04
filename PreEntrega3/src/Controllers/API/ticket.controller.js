@@ -1,7 +1,6 @@
-import TicketDao from "../Services/DAOS/mongoDB/ticket.dao.js";
+import TicketDao from "../../Services/DAOS/mongoDB/ticket.dao.js";
 
-
-import __dirname from "../dirname.js";
+import __dirname from "../../dirname.js";
 
 export const getAllTickets = async (req, res) => {
   try {

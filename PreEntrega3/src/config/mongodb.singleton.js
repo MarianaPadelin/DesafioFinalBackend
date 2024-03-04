@@ -34,3 +34,4 @@ export default class MongoSingleton {
 }
 
 // MongoServerError: cannot use non-majority 'w' mode majorit when a host is not a member of a replica set, se debe a la configuración de escritura ('w') que estás utilizando en tus operaciones de MongoDB. Este error ocurre cuando intentas utilizar el modo de escritura 'majority' en una base de datos MongoDB que no está configurada como un conjunto de réplicas (replica set).
+

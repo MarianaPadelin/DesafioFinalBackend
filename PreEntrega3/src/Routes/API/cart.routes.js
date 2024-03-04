@@ -1,6 +1,15 @@
 import { Router } from "express";
-import { addProductToCart, changeProductQuantity, deleteCart, deleteProductFromCart, finalizarCompra, getCarts, getOneCart, postCart } from "../Controllers/cart.controller.js";
-import { passportCall, authorization } from "../dirname.js";
+import {
+  addProductToCart,
+  changeProductQuantity,
+  deleteCart,
+  deleteProductFromCart,
+  finalizarCompra,
+  getCarts,
+  getOneCart,
+  postCart,
+} from "../../Controllers/API/cart.controller.js";
+import { passportCall, authorization } from "../../dirname.js";
 const router = Router();
 
 router.get("/", getCarts);

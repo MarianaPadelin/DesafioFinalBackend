@@ -22,30 +22,4 @@ botonLogout.addEventListener("click", (e) => {
     });
 });
 
-// const botonAñadirItem = document.getElementById("agregarItem");
-
-// form.addEventListener("submit", (e) => {
-//   e.preventDefault();
-//   const data = new FormData(form);
-//   const obj = {};
-//   data.forEach((value, key) => (obj[key] = value));
-//   cid = req.user.cart;
-
-//   console.log(cid);
-//   fetch(`/api/carts/${cid}/product/${pid}`, {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//   })
-//     .then((result) => {
-//       if (result.status === 200) {
-//         return alert("Se añadió el producto al carrito");
-//       }
-//       return alert("Error al agregar el producto");
-//     })
-//     .catch((error) => {
-//       console.log(error);
-//     });
-// });
 

@@ -1,10 +1,12 @@
-import userDao from "../DAOS/mongoDB/user.dao.js";
+// import userDao from "../DAOS/mongoDB/user.dao.js";
 
-class UserRepository {
-  logUser = (email, password) => {
-    return userDao.logUser(email, password);
-  };
- 
-}
+// class UserRepository {
+//   constructor(dao) {
+//     this.dao = dao;
+//   }
+//   logUser = async (email, password) => {
+//     return await userDao.logUser(email, password);
+//   };
+// }
 
-export default new UserRepository();
+// export default new UserRepository();

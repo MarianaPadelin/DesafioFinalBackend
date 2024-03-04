@@ -1,4 +1,4 @@
-import MessagesDao from "../Services/DAOS/messages.dao.js";
+import MessagesDao from "../../Services/DAOS/mongoDB/messages.dao.js";
 
 export const getChat = async (req, res) => {
   const message = req.body;

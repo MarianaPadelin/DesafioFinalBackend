@@ -125,7 +125,9 @@ class CartDao {
 
         if (cartFound) {
           cartFound.products = [];
-          return await cartModel.findByIdAndDelete({ _id: cartFound._id });
+          console.log(cartFound)
+
+           return await cartModel.findByIdAndUpdate({ _id }, cartFound);
         }
         return "Cart not found";
       }

@@ -9,7 +9,9 @@ class TicketDao {
   async findOneTicket(_id) {
     try {
       if (mongoose.Types.ObjectId.isValid(_id)) {
-        return await ticketModel.findById(_id).populate("cart._id");
+        const ticket = await ticketModel.findById(_id).populate("cart._id");
+        console.log(ticket)
+        return ticket
       }
       return { error: "Id format not valid" };
     } catch (error) {

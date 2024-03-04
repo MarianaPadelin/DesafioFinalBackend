@@ -1,6 +1,5 @@
 import ticketDao from "../DAOS/mongoDB/ticket.dao.js";
 
-
 class TicketRepository {
 
   getAll = () => {

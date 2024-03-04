@@ -1,24 +1,25 @@
 import express from "express";
 import handlebars from "express-handlebars";
 
-import mongoose from "mongoose";
 import MongoStore from "connect-mongo";
+import MongoSingleton from "./config/mongodb.singleton.js";
 
 import passport from "passport";
 import inicializePassport from "./config/passport.config.js";
 
 import __dirname from "./dirname.js";
+import cors from "cors";
 
-import viewRouter from "./Routes/views.routes.js";
-import productRouter from "./Routes/product.routes.js";
-import usersViewsRouter from "./Routes/user.views.routes.js";
-import githubViewRouter from "./Routes/github.views.routes.js";
-import cartRouter from "./Routes/cart.routes.js";
-import jwtRouter from "./Routes/jwt.routes.js";
-import ticketRouter from "./Routes/ticket.routes.js"
+import viewRouter from "./Routes/VIEWS/views.routes.js";
+import productRouter from "./Routes/API/product.routes.js";
+import usersViewsRouter from "./Routes/VIEWS/user.views.routes.js";
+import githubViewRouter from "./Routes/VIEWS/github.views.routes.js";
+import cartRouter from "./Routes/API/cart.routes.js";
+import jwtRouter from "./Routes/API/jwt.routes.js";
+import ticketRouter from "./Routes/API/ticket.routes.js"
 
 import { Server } from "socket.io";
-import messagesDao from "./Services/DAOS/messages.dao.js";
+import messagesDao from "./Services/DAOS/mongoDB/messages.dao.js";
 
 import Handlebars from "handlebars";
 import { allowInsecurePrototypeAccess } from "@handlebars/allow-prototype-access";
@@ -62,18 +63,19 @@ io.on("connection", (socket) => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-//mongoose
+//cors
+app.use(cors());
 
-// const MONGO_URL = config.mongoUrl;
+//mongoose con singleton
+const mongoInstance = async () => {
+  try {
+    await MongoSingleton.getInstance();
+  } catch (error) {
+    console.log(error);
+  }
+};
+mongoInstance();
 
-// mongoose
-//   .connect(MONGO_URL)
-//   .then(() => {
-//     console.log("-------- DB connected -------");
-//   })
-//   .catch((err) => {
-//     console.log("Hubo un error de conexión a la DB" + err);
-//   });
 
 //Motor de handlebars
 app.engine(

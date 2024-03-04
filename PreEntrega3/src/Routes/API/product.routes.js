@@ -5,10 +5,12 @@ import {
   postProduct,
   changeProduct,
   deleteProduct,
-} from "../Controllers/products.controller.js";
-import { getEditForm, getProductForm } from "../Controllers/admin.views.controller.js";
-import { passportCall, authorization } from "../dirname.js";
-
+} from "../../Controllers/API/products.controller.js";
+import {
+  getEditForm,
+  getProductForm,
+} from "../../Controllers/VIEWS/admin.views.controller.js";
+import { passportCall, authorization } from "../../dirname.js";
 
 const router = Router();
 
